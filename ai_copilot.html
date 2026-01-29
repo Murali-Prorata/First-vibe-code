@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to our Platform</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f6f7fb;color:#111}
+        header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:28px 20px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,0.06)}
+        header h1{font-size:1.8rem}
+        .container{max-width:1100px;margin:24px auto;padding:0 20px}
+
+        /* top unit: search bar + pills + display ad */
+        .top-unit{background:#fff;border-radius:12px;padding:18px;box-shadow:0 8px 24px rgba(18,18,50,0.04);margin-top:-40px}
+        .copilot-title{font-weight:700;margin-bottom:8px;color:#333}
+        .search-row{display:flex;gap:12px;align-items:center}
+        .search-row form{flex:1;display:flex;gap:8px}
+        .search-row input{flex:1;padding:12px;border-radius:8px;border:1px solid #e6e6ee;font-size:1rem}
+        .search-row button{padding:10px 14px;border-radius:8px;background:#667eea;color:#fff;border:0;font-weight:700;cursor:pointer}
+
+        .pills-area{margin-top:14px;padding:8px 0;overflow:hidden}
+        .marquee{width:100%;overflow:hidden}
+        .row{display:flex;gap:12px;align-items:center;width:100%;flex-wrap:nowrap;white-space:nowrap}
+        .pill{display:inline-flex;padding:8px 12px;border-radius:999px;background:#fff;border:1px solid #e6e6ee;padding:10px 14px;box-shadow:0 2px 6px rgba(21,21,50,0.04);text-decoration:none;color:#1a1a1a;font-weight:600;white-space:nowrap}
+        .pill:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(102,126,234,0.08);border-color:#667eea}
+
+        @keyframes marquee-left{from{transform:translateX(0%)}to{transform:translateX(-30%)}}
+        @keyframes marquee-right{from{transform:translateX(-30%)}to{transform:translateX(0%)}}
+        .track{display:flex;gap:12px;animation:marquee-left 22s linear infinite;flex-wrap:nowrap}
+        .track.reverse{animation:marquee-right 26s linear infinite}
+        .track-inner{display:flex;gap:12px;flex-wrap:nowrap}
+
+        .display-ad{display:flex;gap:16px;align-items:center;margin-top:16px;padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid #eef2ff;position:relative}
+        .sponsored-badge{position:absolute;left:14px;top:-12px;background:#fff9e6;color:#b36b00;padding:6px 10px;border-radius:6px;font-weight:700;border:1px solid #f3d8b0;font-size:0.8rem}
+        .ad-image{width:160px;height:96px;border-radius:8px;overflow:hidden;flex-shrink:0}
+        .ad-image img{width:100%;height:100%;object-fit:cover;display:block}
+        .ad-content{flex:1}
+        .ad-content h4{margin-bottom:6px;color:#05386b}
+        .ad-content p{color:#444;font-size:0.95rem}
+
+        .content{background:#fff;border-radius:10px;padding:22px;margin-top:20px;box-shadow:0 6px 18px rgba(18,18,50,0.03)}
+
+        footer{margin-top:26px;text-align:center;color:#777;padding:18px 0;border-top:1px solid #eee}
+
+        @media (max-width:700px){.ad-image{display:none}.search-row{flex-direction:column;align-items:stretch}.search-row button{width:100%}}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to our Platform</h1>
+        <p style="opacity:0.95;margin-top:6px;">Copilot-first experience for concise answers and curated prompts.</p>
+    </header>
+
+    <div class="container">
+        <div class="top-unit">
+            <div class="copilot-title">I am your copilot</div>
+            <div class="search-row">
+                <form id="topSearch" action="ai_result.html" method="get">
+                    <input id="topQuery" name="q" placeholder="Ask me anything" aria-label="Ask me anything">
+                    <button type="submit">Ask</button>
+                </form>
+            </div>
+
+            <div class="pills-area">
+                <div class="marquee">
+                    <div class="row track">
+                                        <div class="track-inner">
+                                            <a class="pill" href="ai_result.html?q=How%20can%20I%20optimize%20website%20performance%20quickly">How can I optimize website performance quickly</a>
+                                            <a class="pill" href="ai_result.html?q=Best%20cloud%20hosting%20options%20for%20small%20businesses">Best cloud hosting options for small businesses</a>
+                                            <a class="pill" href="ai_result.html?q=Steps%20to%20deploy%20a%20React%20app%20on%20VPS">Steps to deploy a React app on VPS</a>
+                                            <a class="pill" href="ai_result.html?q=How%20to%20learn%20JavaScript%20fast%20and%20effectively">How to learn JavaScript fast and effectively</a>
+                                        </div>
+                    </div>
+                    <div class="row track reverse" style="margin-top:8px;">
+                        <div class="track-inner">
+                            <a class="pill" href="ai_result.html?q=SEO%20strategies%20to%20increase%20organic%20traffic%20fast">SEO strategies to increase organic traffic fast</a>
+                            <a class="pill" href="ai_result.html?q=How%20to%20secure%20my%20web%20application%20against%20attacks">How to secure my web application against attacks</a>
+                            <a class="pill" href="ai_result.html?q=Benefits%20of%20using%20serverless%20architectures%20for%20startups">Benefits of using serverless architectures for startups</a>
+                            <a class="pill" href="ai_result.html?q=Top%20tools%20for%20remote%20team%20collaboration%20in%202026">Top tools for remote team collaboration in 2026</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a class="display-ad" href="advertiser.html">
+                <div class="sponsored-badge">Sponsored</div>
+                <div class="ad-image">
+                    <img src="mountain.svg" alt="Mountain">
+                </div>
+                <div class="ad-content">
+                    <h4>Explore the Peaks — Adventure Awaits</h4>
+                    <p>Discover curated mountain tours and outdoor gear to make your next trip unforgettable. Click to learn more.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="content">
+            <h2>In-depth Resources and Guides</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dictum, turpis quis gravida pulvinar, lectus ipsum luctus augue, nec accumsan odio sem id ipsum. Praesent id sem lectus. Integer at arcu orci. Nullam at nisl vel dolor luctus gravida.</p>
+            <p>Maecenas vehicula sapien in ligula iaculis, vitae elementum erat elementum. Nulla facilisi. Sed egestas, felis in volutpat tristique, risus nibh pharetra ex, at tincidunt purus nunc id tortor. Aliquam erat volutpat.</p>
+            <p>Suspendisse potenti. Cras rutrum, ipsum nec aliquet volutpat, arcu urna condimentum enim, eget volutpat ipsum nisl non elit. Sed dapibus, lorem a dapibus tincidunt, nulla lacus hendrerit magna, sit amet dictum turpis justo vitae nunc.</p>
+            <p>Vivamus molestie, sem id vulputate consequat, urna ipsum vulputate lectus, nec varius odio lorem eget urna. Integer vitae sapien in urna tristique rhoncus quis nec erat.</p>
+            <p>More long-form content to fill the page for demonstration purposes. You can replace this with your own articles, guides, or resources as needed.</p>
+            <h2 style="margin-top:18px;">Further Reading</h2>
+            <p>Quisque fringilla nisl quis risus euismod, a iaculis nibh hendrerit. Nam ut elit vestibulum, efficitur ipsum nec, volutpat mauris. Donec vitae arcu sed sapien facilisis sollicitudin. Integer sed ante id nibh rhoncus pulvinar.</p>
+            <p>Proin vitae justo vel mi consequat efficitur. Integer in vehicula quam. Curabitur a magna massa. Pellentesque ullamcorper, velit in fermentum iaculis, turpis lorem vulputate neque, eget ultrices augue massa nec sapien.</p>
+        </div>
+
+        <footer>&copy; 2026 Your Platform</footer>
+    </div>
+
+    <script>
+        // Keep form default GET to ai_result.html. Simple client-side check.
+        document.getElementById('topSearch').addEventListener('submit', function(e){
+            var q = document.getElementById('topQuery').value.trim();
+            if(!q){ e.preventDefault(); }
+        });
+    </script>
+</body>
+</html>
