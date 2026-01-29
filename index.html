@@ -3,64 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webpage with Ad</title>
+    <title>Webpage with Text Ads</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        * {
             margin: 0;
-            background-color: #f0f0f0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .ads-container {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-            max-width: 900px;
-        }
-        .ad {
-            background-color: white;
-            border: 2px solid #333;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            flex: 1;
-            min-width: 300px;
-        }
-        .ad h1 {
-            margin: 0 0 20px 0;
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f5f5f5;
             color: #333;
         }
-        .ad a {
-            display: inline-block;
-            margin: 10px;
-            padding: 10px 20px;
-            background-color: #007bff;
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .ad a:hover {
-            background-color: #0056b3;
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        /* Content Section */
+        .content-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .content-section h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .content-section p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        /* Ads Container */
+        .ads-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Text Ad Styles */
+        .text-ad {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .text-ad:hover {
+            border-color: #667eea;
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.2);
+        }
+
+        .sponsored-label {
+            display: inline-block;
+            background-color: #f0f0f0;
+            color: #666;
+            font-size: 0.85em;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .text-ad h3 {
+            color: #0066cc;
+            font-size: 1.3em;
+            margin-bottom: 8px;
+            text-decoration: none;
+        }
+
+        .text-ad h3:hover {
+            text-decoration: underline;
+        }
+
+        .display-url {
+            color: #007a53;
+            font-size: 0.9em;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .ad-description {
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .ad-link {
+            display: inline-block;
+            background-color: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .ad-link:hover {
+            background-color: #764ba2;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            margin-top: 60px;
+            border-top: 1px solid #e0e0e0;
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <header>
+        <h1>Welcome to Our Platform</h1>
+        <p>Discover amazing services and resources</p>
+    </header>
+
+    <!-- Content Section -->
+    <div class="content-section">
+        <h2>Explore Featured Services</h2>
+        <p>
+            We bring you the best opportunities to enhance your online presence and develop your skills. 
+            Browse through our curated selection of premium services and educational resources tailored to help you succeed.
+        </p>
+    </div>
+
+    <!-- Text Ads -->
     <div class="ads-container">
-        <div class="ad">
-            <h1>headline</h1>
-            <a href="#">link 1</a>
-            <a href="#">Link 2</a>
+        <!-- Cloud Hosting Ad -->
+        <div class="text-ad">
+            <div class="sponsored-label">Sponsored</div>
+            <h3>CloudHost Pro - Reliable Cloud Hosting</h3>
+            <div class="display-url">www.cloudhost-pro.com</div>
+            <p class="ad-description">
+                Experience lightning-fast hosting with 99.9% uptime guarantee. Get 50% off your first year with our premium cloud hosting plans. Perfect for startups and enterprises alike.
+            </p>
+            <a href="#" class="ad-link">Claim 50% Discount</a>
         </div>
-        <div class="ad">
-            <h1>headline</h1>
-            <a href="#">link 1</a>
-            <a href="#">Link 2</a>
+
+        <!-- Web Development Courses Ad -->
+        <div class="text-ad">
+            <div class="sponsored-label">Sponsored</div>
+            <h3>CodeAcademy - Free Web Development Courses</h3>
+            <div class="display-url">www.codeacademy.com/free-courses</div>
+            <p class="ad-description">
+                Master HTML, CSS, JavaScript, React, and more with our free comprehensive web development courses. Start your coding journey today with industry experts.
+            </p>
+            <a href="#" class="ad-link">Enroll Now - Free</a>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Your Platform. All rights reserved.</p>
+    </footer>
 </body>
 </html>
