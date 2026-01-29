@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to our Platform</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f6f7fb;color:#111}
+        header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:28px 20px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,0.06)}
+        header h1{font-size:1.8rem}
+        .container{max-width:900px;margin:24px auto;padding:0 20px}
+
+        .conversation{background:#fff;border-radius:12px;padding:20px;box-shadow:0 8px 24px rgba(18,18,50,0.05)}
+        .msg{max-width:85%;padding:12px 14px;border-radius:12px;margin-bottom:12px;line-height:1.55}
+        .msg.user{background:#eaf1ff;color:#05386b;margin-left:auto;border-bottom-right-radius:2px}
+        .msg.ai{background:#f3f4f8;color:#0b2545;border-bottom-left-radius:2px}
+
+        .meta{font-size:0.9rem;color:#666;margin-bottom:14px}
+
+        .btn-back{display:inline-block;margin-top:14px;padding:8px 12px;background:#667eea;color:#fff;border-radius:8px;text-decoration:none;font-weight:700}
+
+        footer{margin-top:30px;text-align:center;color:#777;padding:18px 0;border-top:1px solid #eee}
+
+        @media (max-width:600px){.msg{max-width:100%}}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to our Platform</h1>
+    </header>
+
+    <div class="container">
+        <div class="conversation" id="conversation">
+            <div class="meta">This page simulates a conversational AI answer generated from the selected prompt.</div>
+            <!-- messages will be injected here -->
+        </div>
+
+        <!-- Inline AI search bar (appears after answer) -->
+        <div style="margin-top:18px;">
+            <form id="aiInlineForm" onsubmit="return submitInline(event)">
+                <div style="display:flex;gap:10px;align-items:center;max-width:900px;margin:0 auto;">
+                    <input id="aiInlineQuery" placeholder="Ask me anything" style="flex:1;padding:12px;border-radius:8px;border:1px solid #ddd;font-size:1rem;" />
+                    <button style="padding:10px 14px;border-radius:8px;background:#667eea;color:#fff;border:0;font-weight:700;cursor:pointer;">Ask</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Related questions -->
+        <div id="related" style="max-width:900px;margin:18px auto 0;padding:0 20px;">
+            <h3 style="margin-bottom:10px;color:#333">Related questions</h3>
+            <div id="related-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+        </div>
+
+        <a class="btn-back" href="ai_search.html">&larr; Back to prompts</a>
+
+        <footer>&copy; 2026 Your Platform</footer>
+    </div>
+
+    <script>
+        function getQueryParam(name){
+            var params = new URLSearchParams(window.location.search);
+            return params.get(name) || '';
+        }
+
+        function createMsg(text, cls){
+            var d = document.createElement('div');
+            d.className = 'msg ' + cls;
+            d.textContent = text;
+            return d;
+        }
+
+        function generateAnswer(prompt){
+            // Create a more detailed, prompt-specific simulated answer
+            var safe = function(s){ return String(s); };
+            var intro = "Answer for: \"" + safe(prompt) + "\"<br><br>";
+
+            // Heuristic topic extraction: take key nouns/phrases from prompt
+            var topic = prompt.replace(/[^a-zA-Z0-9\s]/g,'').split(' ').filter(function(w){ return w.length>3; }).slice(0,4).join(' ');
+            if(!topic) topic = prompt.split(' ').slice(0,3).join(' ');
+
+            var summary = "Summary: A concise explanation of the topic '" + topic + "'.<br><br>";
+
+            // Actionable steps tailored to common prompt patterns
+            var steps = "<strong>Actionable steps:</strong><br>" +
+                        "1. Assess the current situation and identify key goals.<br>" +
+                        "2. Break the task into small, testable steps focused on '" + topic + "'.<br>" +
+                        "3. Implement changes incrementally and measure their impact.<br>" +
+                        "4. Iterate based on results and prioritize automation where possible.<br><br>";
+
+            var resources = "<strong>Suggested resources:</strong><br>" +
+                            "- Official documentation and starter guides specific to the topic.<br>" +
+                            "- Community tutorials, hands-on examples, and sample projects.<br>" +
+                            "- Tools and services to consider when scaling or deploying.<br><br>";
+
+            var example = "<strong>Example checklist:</strong><br>- Quick audit of current setup<br>- One prioritized improvement to apply<br>- Run tests and monitor metrics<br>- Deploy and observe<br><br>";
+
+            var closing = "If you'd like a tailored walkthrough (code, commands, or checklists), refine your prompt or click one of the related questions below.";
+            return intro + summary + steps + resources + example + closing;
+        }
+
+        function getRelatedQuestions(prompt){
+            // Create 3 related variations; first will be treated as sponsored
+            var tokens = prompt.replace(/[^a-zA-Z0-9\s]/g,'').split(' ').filter(function(w){ return w.length>2; });
+            var base = tokens.slice(0,4).join(' ');
+            if(!base) base = prompt.slice(0,30);
+            return [
+                'Sponsored: Best practices for ' + base,
+                'How to implement ' + base + ' step-by-step',
+                'Top tools and resources for ' + base
+            ];
+        }
+
+        function renderRelated(prompt){
+            var list = document.getElementById('related-list');
+            list.innerHTML = '';
+            var items = getRelatedQuestions(prompt);
+            items.forEach(function(text, idx){
+                var div = document.createElement('div');
+                div.style.display = 'flex';
+                div.style.alignItems = 'center';
+                div.style.gap = '10px';
+                div.style.padding = '10px 12px';
+                div.style.border = '1px solid #eee';
+                div.style.borderRadius = '8px';
+                div.style.background = idx===0 ? '#fff9f2' : '#fff';
+                div.style.cursor = 'pointer';
+                if(idx===0){
+                    var span = document.createElement('span');
+                    span.textContent = 'Sponsored';
+                    span.style.fontSize = '0.75rem';
+                    span.style.color = '#b36b00';
+                    span.style.fontWeight = '700';
+                    span.style.marginRight = '8px';
+                    div.appendChild(span);
+                }
+                var txt = document.createElement('div');
+                txt.textContent = text.replace(/^Sponsored:\s*/i, '');
+                div.appendChild(txt);
+                div.addEventListener('click', function(){
+                    // When clicked, load that question on the same page
+                    var q = txt.textContent;
+                    handleQuery(q);
+                });
+                list.appendChild(div);
+            });
+        }
+
+        function submitInline(e){
+            e.preventDefault();
+            var q = document.getElementById('aiInlineQuery').value.trim();
+            if(!q) return false;
+            handleQuery(q);
+            return false;
+        }
+
+        function handleQuery(q){
+            // Replace conversation with user message and AI answer
+            var conv = document.getElementById('conversation');
+            conv.innerHTML = '<div class="meta">This page simulates a conversational AI answer generated from the selected prompt.</div>';
+
+            var userMsg = createMsg(q, 'user');
+            conv.appendChild(userMsg);
+
+            // small delay to simulate thinking
+            setTimeout(function(){
+                var answerText = generateAnswer(q);
+                var aiMsg = createMsg('', 'ai');
+                aiMsg.innerHTML = answerText;
+                conv.appendChild(aiMsg);
+                aiMsg.scrollIntoView({behavior:'smooth'});
+
+                // update inline search field and related questions
+                var inline = document.getElementById('aiInlineQuery');
+                if(inline) inline.value = q;
+                renderRelated(q);
+                // update URL without reload for shareability
+                try{ history.replaceState({}, '', '?q=' + encodeURIComponent(q)); }catch(e){}
+            }, 600);
+        }
+
+        (function(){
+            var q = decodeURIComponent(getQueryParam('q') || '').trim();
+            if(!q){
+                // default message
+                var conv = document.getElementById('conversation');
+                conv.appendChild(createMsg('No prompt provided. Return to the prompts page and select a sponsored prompt or submit your question.', 'ai'));
+                renderRelated('general web development tips');
+                return;
+            }
+            // initialize page with the provided query
+            document.getElementById('aiInlineQuery').value = q;
+            handleQuery(q);
+        })();
+    </script>
+</body>
+</html>

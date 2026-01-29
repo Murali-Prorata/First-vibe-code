@@ -1,6 +1,6 @@
-# Text Ads Webpage
+# Welcome to our Platform
 
-A modern, responsive webpage featuring a gradient header, content section, and two professionally styled text advertisements.
+A modern, responsive webpage and AI demo featuring a gradient header, content section, two professionally styled text advertisements, and interactive AI search pages.
 
 ## Features
 
