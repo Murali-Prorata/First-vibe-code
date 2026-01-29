@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nike Brand Agent</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f6f7fb;color:#111}
+        header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:28px 20px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,0.06)}
+        header h1{font-size:1.8rem}
+        .container{max-width:900px;margin:24px auto;padding:0 20px}
+
+        .conversation{background:#fff;border-radius:12px;padding:20px;box-shadow:0 8px 24px rgba(18,18,50,0.05);min-height:300px}
+        .msg{max-width:85%;padding:12px 14px;border-radius:12px;margin-bottom:12px;line-height:1.55}
+        .msg.user{background:#eaf1ff;color:#05386b;margin-left:auto;border-bottom-right-radius:2px}
+        .msg.agent{background:#e8f5e9;color:#1b5e20;border-bottom-left-radius:2px}
+
+        .products-section{margin-top:24px;padding-top:16px;border-top:1px solid #e0e0e0}
+        .products-section h3{font-size:1.1rem;margin-bottom:12px;color:#333}
+        .products-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px}
+        @media (max-width:700px){.products-grid{grid-template-columns:1fr}}
+
+        .product-card{background:#f9f9f9;border:1px solid #ddd;border-radius:8px;padding:14px;text-align:center}
+        .product-image{width:100%;height:120px;background:#eee;border-radius:6px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;color:#888}
+        .product-title{font-weight:700;margin-bottom:8px;font-size:0.95rem}
+        .buy-btn{display:inline-block;padding:8px 16px;background:#667eea;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;text-decoration:none}
+        .buy-btn:hover{background:#764ba2}
+
+        .follow-up{margin-top:20px;padding-top:16px;border-top:1px solid #e0e0e0}
+        .chat-form{display:flex;gap:8px;margin-top:12px}
+        .chat-form input{flex:1;padding:10px 12px;border:1px solid #ddd;border-radius:6px;font-size:0.95rem}
+        .chat-form button{padding:10px 16px;background:#667eea;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700}
+        .chat-form button:hover{background:#764ba2}
+
+        .meta{font-size:0.9rem;color:#666;margin-bottom:14px}
+        .btn-back{display:inline-block;margin-top:14px;padding:8px 12px;background:#667eea;color:#fff;border-radius:8px;text-decoration:none;font-weight:700}
+        footer{margin-top:30px;text-align:center;color:#777;padding:18px 0;border-top:1px solid #eee}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to our Platform</h1>
+    </header>
+
+    <div class="container">
+        <div class="conversation" id="conversation">
+            <div class="meta">Nike Brand Agent - Personalized assistance</div>
+        </div>
+
+        <div class="follow-up">
+            <div style="font-weight:700;color:#333;">Is there anything I can help with?</div>
+            <form class="chat-form" onsubmit="handleFollowUp(event)">
+                <input type="text" id="followUpInput" placeholder="Ask another question..." required>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+
+        <a class="btn-back" href="ai_search3.html">&larr; Back</a>
+
+        <footer>&copy; 2026 Your Platform</footer>
+    </div>
+
+    <script>
+        function getQueryParam(name){
+            var params = new URLSearchParams(window.location.search);
+            return params.get(name) || '';
+        }
+        function createMsg(text, cls){
+            var d = document.createElement('div');
+            d.className = 'msg ' + cls;
+            d.innerHTML = text.replace(/\n/g, '<br>');
+            return d;
+        }
+
+        function generateAnswer(prompt){
+            var safe = function(s){ return String(s); };
+            var topic = prompt.replace(/[^a-zA-Z0-9\s]/g,'').split(' ').filter(function(w){ return w.length>3; }).slice(0,4).join(' ');
+            if(!topic) topic = prompt.split(' ').slice(0,3).join(' ');
+            return "Thank you for your question about '" + topic + "'.\n\nAt Nike, we are committed to providing high-quality performance gear that meets your needs. Whether you're looking for durability, comfort, or style, our products are engineered to help you achieve your goals.\n\nHere are a couple of products that are recommended";
+        }
+
+        function displayAnswer(q){
+            var conv = document.getElementById('conversation');
+            conv.innerHTML = '<div class="meta">Nike Brand Agent - Personalized assistance</div>';
+
+            if(!q || q.trim() === ''){
+                conv.appendChild(createMsg('No question provided. Please ask your question above.', 'agent'));
+                return;
+            }
+
+            // User message
+            var userMsg = createMsg(q, 'user');
+            conv.appendChild(userMsg);
+
+            setTimeout(function(){
+                // Agent response
+                var answerText = generateAnswer(q);
+                var agentMsg = createMsg(answerText, 'agent');
+                conv.appendChild(agentMsg);
+
+                // Products section
+                var productsDiv = document.createElement('div');
+                productsDiv.className = 'products-section';
+                productsDiv.innerHTML = `
+                    <h3>Recommended Products</h3>
+                    <div class="products-grid">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="100" height="100" fill="#4CAF50"/>
+                                    <path d="M30 40 Q50 20 70 40 L70 70 Q50 85 30 70 Z" fill="#fff" opacity="0.3"/>
+                                    <circle cx="50" cy="35" r="8" fill="#fff"/>
+                                </svg>
+                            </div>
+                            <div class="product-title">Nike Performance Shoe</div>
+                            <button class="buy-btn">Buy now</button>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image">
+                                <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="100" height="100" fill="#2196F3"/>
+                                    <path d="M25 50 L45 30 L50 45 L60 25 L75 50 L70 70 L30 70 Z" fill="#fff" opacity="0.3"/>
+                                    <circle cx="50" cy="55" r="6" fill="#fff"/>
+                                </svg>
+                            </div>
+                            <div class="product-title">Nike Apparel Collection</div>
+                            <button class="buy-btn">Buy now</button>
+                        </div>
+                    </div>
+                `;
+                conv.appendChild(productsDiv);
+                productsDiv.scrollIntoView({behavior:'smooth'});
+            }, 700);
+        }
+
+        function handleFollowUp(event){
+            event.preventDefault();
+            var input = document.getElementById('followUpInput');
+            var newQ = input.value.trim();
+            if(!newQ) return;
+
+            input.value = '';
+            displayAnswer(newQ);
+        }
+
+        // Initial load
+        (function(){
+            var q = decodeURIComponent(getQueryParam('q') || '').trim();
+            displayAnswer(q);
+        })();
+    </script>
+</body>
+</html>

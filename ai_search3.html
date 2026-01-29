@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to our Platform</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background:#f7f7fb; color:#222; }
+
+        header {
+            background: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+            color: #fff;
+            padding: 36px 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        }
+        header h1 { font-size: 2.1rem; margin-bottom: 8px; }
+        header p { opacity: 0.95; }
+
+        .container { max-width: 1100px; margin: 28px auto; padding: 0 20px; }
+
+        /* Sponsored prompt pills */
+        .pills-wrapper { margin: 18px 0 30px; overflow: hidden; }
+        .track { display: flex; gap: 12px; align-items: center; }
+        .pill { display: inline-flex; align-items: center; gap:8px; background: #fff; border: 1px solid #e6e6ee; padding: 10px 14px; border-radius: 999px; box-shadow: 0 2px 6px rgba(21,21,50,0.04); text-decoration: none; color: #1a1a1a; font-weight: 600; white-space: nowrap; }
+        .pill .sponsored { font-size: 0.65rem; color:#8b8b9f; text-transform: uppercase; margin-right:6px; }
+        .pill:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(102,126,234,0.12); border-color: #667eea; }
+
+        /* Two moving rows */
+        .marquee { position: relative; width:100%; overflow:hidden; }
+        .marquee .track { will-change: transform; }
+
+        /* animation: slow left-to-right for first row, right-to-left for second */
+        @keyframes marquee-left { from { transform: translateX(0%);} to { transform: translateX(-50%);} }
+        @keyframes marquee-right { from { transform: translateX(-50%);} to { transform: translateX(0%);} }
+
+        .row { display:flex; gap:12px; align-items:center; padding:10px 0; }
+        .row.track { animation: marquee-left 28s linear infinite; }
+        .row.track.reverse { animation: marquee-right 34s linear infinite; }
+
+        /* Duplicate the pill set to create seamless loop */
+        .track-inner { display:flex; gap:12px; }
+
+        /* Main content large area */
+        .content { background:#fff; border-radius:10px; padding:28px; box-shadow: 0 6px 24px rgba(18,18,50,0.04); }
+        .content h2 { margin-bottom:14px; font-size:1.5rem; }
+        .content p { color:#444; line-height:1.7; margin-bottom:16px; }
+
+        /* Bottom AI search bar */
+        .ai-bar { position: sticky; bottom: 16px; margin-top: 36px; display:flex; justify-content:center; }
+        .ai-input { width:100%; max-width:900px; display:flex; gap:10px; align-items:center; background:#fff; padding:12px; border-radius:10px; border:1px solid #e6e6ee; box-shadow: 0 6px 18px rgba(30,30,60,0.04); }
+        .ai-input input { flex:1; border:0; outline:none; font-size:1rem; padding:8px 6px; }
+        .ai-input button { background:#667eea; color:#fff; border:0; padding:10px 14px; border-radius:8px; font-weight:700; cursor:pointer; }
+        .ai-input button:hover { background:#5869e0; }
+
+        footer { margin-top:40px; border-top:1px solid #eee; padding:18px 0; text-align:center; color:#777; }
+
+        @media (max-width:700px){
+            .pill { padding:9px 12px; font-size:0.92rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to our Platform</h1>
+        <p>Curated prompts and an AI search bar to explore answers.</p>
+    </header>
+
+    <div class="container">
+        <!-- Sponsored prompt pills (two moving rows) -->
+        <div class="pills-wrapper">
+            <div class="marquee">
+                <div class="row track">
+                    <div class="track-inner">
+                        <a class="pill" href="ai_results3.html?q=How%20can%20I%20optimize%20website%20performance%20quickly"><span class="sponsored">Sponsored</span>How can I optimize website performance quickly</a>
+                        <a class="pill" href="ai_results3.html?q=Best%20cloud%20hosting%20options%20for%20small%20businesses"><span class="sponsored">Sponsored</span>Best cloud hosting options for small businesses</a>
+                        <a class="pill" href="ai_results3.html?q=Steps%20to%20deploy%20a%20React%20app%20on%20VPS"><span class="sponsored">Sponsored</span>Steps to deploy a React app on VPS</a>
+                        <a class="pill" href="ai_results3.html?q=How%20to%20learn%20JavaScript%20fast%20and%20effectively"><span class="sponsored">Sponsored</span>How to learn JavaScript fast and effectively</a>
+                        <!-- duplicate to create seamless scroll -->
+                        <a class="pill" href="ai_results3.html?q=How%20can%20I%20optimize%20website%20performance%20quickly"><span class="sponsored">Sponsored</span>How can I optimize website performance quickly</a>
+                        <a class="pill" href="ai_results3.html?q=Best%20cloud%20hosting%20options%20for%20small%20businesses"><span class="sponsored">Sponsored</span>Best cloud hosting options for small businesses</a>
+                        <a class="pill" href="ai_results3.html?q=Steps%20to%20deploy%20a%20React%20app%20on%20VPS"><span class="sponsored">Sponsored</span>Steps to deploy a React app on VPS</a>
+                        <a class="pill" href="ai_results3.html?q=How%20to%20learn%20JavaScript%20fast%20and%20effectively"><span class="sponsored">Sponsored</span>How to learn JavaScript fast and effectively</a>
+                    </div>
+                </div>
+                <div class="row track reverse" style="margin-top:10px;">
+                    <div class="track-inner">
+                        <a class="pill" href="ai_results3.html?q=SEO%20strategies%20to%20increase%20organic%20traffic%20fast"><span class="sponsored">Sponsored</span>SEO strategies to increase organic traffic fast</a>
+                        <a class="pill" href="ai_results3.html?q=How%20to%20secure%20my%20web%20application%20against%20attacks"><span class="sponsored">Sponsored</span>How to secure my web application against attacks</a>
+                        <a class="pill" href="ai_results3.html?q=Benefits%20of%20using%20serverless%20architectures%20for%20startups"><span class="sponsored">Sponsored</span>Benefits of using serverless architectures for startups</a>
+                        <a class="pill" href="ai_results3.html?q=Top%20tools%20for%20remote%20team%20collaboration%20in%202026"><span class="sponsored">Sponsored</span>Top tools for remote team collaboration in 2026</a>
+                        <!-- duplicate for loop -->
+                        <a class="pill" href="ai_results3.html?q=SEO%20strategies%20to%20increase%20organic%20traffic%20fast"><span class="sponsored">Sponsored</span>SEO strategies to increase organic traffic fast</a>
+                        <a class="pill" href="ai_results3.html?q=How%20to%20secure%20my%20web%20application%20against%20attacks"><span class="sponsored">Sponsored</span>How to secure my web application against attacks</a>
+                        <a class="pill" href="ai_results3.html?q=Benefits%20of%20using%20serverless%20architectures%20for%20startups"><span class="sponsored">Sponsored</span>Benefits of using serverless architectures for startups</a>
+                        <a class="pill" href="ai_results3.html?q=Top%20tools%20for%20remote%20team%20collaboration%20in%202026"><span class="sponsored">Sponsored</span>Top tools for remote team collaboration in 2026</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <h2>In-depth Resources and Guides</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dictum, turpis quis gravida pulvinar, lectus ipsum luctus augue, nec accumsan odio sem id ipsum. Praesent id sem lectus. Integer at arcu orci. Nullam at nisl vel dolor luctus gravida.</p>
+            <p>Maecenas vehicula sapien in ligula iaculis, vitae elementum erat elementum. Nulla facilisi. Sed egestas, felis in volutpat tristique, risus nibh pharetra ex, at tincidunt purus nunc id tortor. Aliquam erat volutpat.</p>
+            <p>Suspendisse potenti. Cras rutrum, ipsum nec aliquet volutpat, arcu urna condimentum enim, eget volutpat ipsum nisl non elit. Sed dapibus, lorem a dapibus tincidunt, nulla lacus hendrerit magna, sit amet dictum turpis justo vitae nunc.</p>
+            <p>Vivamus molestie, sem id vulputate consequat, urna ipsum vulputate lectus, nec varius odio lorem eget urna. Integer vitae sapien in urna tristique rhoncus quis nec erat.</p>
+            <p>More long-form content to fill the page for demonstration purposes. You can replace this with your own articles, guides, or resources as needed.</p>
+
+            <!-- extra filler -->
+            <h2 style="margin-top:18px;">Further Reading</h2>
+            <p>Quisque fringilla nisl quis risus euismod, a iaculis nibh hendrerit. Nam ut elit vestibulum, efficitur ipsum nec, volutpat mauris. Donec vitae arcu sed sapien facilisis sollicitudin. Integer sed ante id nibh rhoncus pulvinar.</p>
+            <p>Proin vitae justo vel mi consequat efficitur. Integer in vehicula quam. Curabitur a magna massa. Pellentesque ullamcorper, velit in fermentum iaculis, turpis lorem vulputate neque, eget ultrices augue massa nec sapien.</p>
+        </div>
+
+        <!-- AI search bar at bottom -->
+        <div class="ai-bar">
+            <form class="ai-input" id="aiForm" action="ai_results3.html" method="get">
+                <input id="aiQuery" name="q" placeholder="Ask me anything" aria-label="Ask me anything" />
+                <button type="submit">Ask</button>
+            </form>
+        </div>
+
+        <footer>
+            &copy; 2026 Your Platform — Built for demo purposes
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('aiForm').addEventListener('submit', function(e){
+            var q = document.getElementById('aiQuery').value.trim();
+            if(!q){ e.preventDefault(); return; }
+        });
+    </script>
+</body>
+</html>

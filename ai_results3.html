@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to our Platform</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f6f7fb;color:#111}
+        header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:28px 20px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,0.06)}
+        header h1{font-size:1.8rem}
+        .container{max-width:900px;margin:24px auto;padding:0 20px}
+
+        .conversation{background:#fff;border-radius:12px;padding:20px;box-shadow:0 8px 24px rgba(18,18,50,0.05)}
+        .msg{max-width:85%;padding:12px 14px;border-radius:12px;margin-bottom:12px;line-height:1.55}
+        .msg.user{background:#eaf1ff;color:#05386b;margin-left:auto;border-bottom-right-radius:2px}
+        .msg.ai{background:#f3f4f8;color:#0b2545;border-bottom-left-radius:2px}
+
+        .chat-bubble{display:inline-block;padding:10px 14px;background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:8px;margin:12px 0;cursor:pointer;font-weight:700;text-decoration:none}
+        .chat-bubble:hover{background:#ffe69c}
+
+        .meta{font-size:0.9rem;color:#666;margin-bottom:14px}
+        .btn-back{display:inline-block;margin-top:14px;padding:8px 12px;background:#667eea;color:#fff;border-radius:8px;text-decoration:none;font-weight:700}
+        footer{margin-top:30px;text-align:center;color:#777;padding:18px 0;border-top:1px solid #eee}
+
+        @media (max-width:600px){.msg{max-width:100%}}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to our Platform</h1>
+    </header>
+
+    <div class="container">
+        <div class="conversation" id="conversation">
+            <div class="meta">This page simulates a conversational AI answer generated from the selected prompt.</div>
+        </div>
+
+        <a class="btn-back" href="ai_search3.html">&larr; Back to prompts</a>
+
+        <footer>&copy; 2026 Your Platform</footer>
+    </div>
+
+    <script>
+        function getQueryParam(name){
+            var params = new URLSearchParams(window.location.search);
+            return params.get(name) || '';
+        }
+        function createMsg(text, cls){
+            var d = document.createElement('div');
+            d.className = 'msg ' + cls;
+            d.textContent = text;
+            return d;
+        }
+
+        function generateAnswer(prompt){
+            var safe = function(s){ return String(s); };
+            var intro = "Answer for: \"" + safe(prompt) + "\"\n\n";
+            var topic = prompt.replace(/[^a-zA-Z0-9\s]/g,'').split(' ').filter(function(w){ return w.length>3; }).slice(0,4).join(' ');
+            if(!topic) topic = prompt.split(' ').slice(0,3).join(' ');
+            var summary = "Summary: A concise explanation of the topic '" + topic + "'.\n\n";
+            var steps = "Actionable steps:\n1. Assess the current situation and identify key goals.\n2. Break the task into small, testable steps focused on '" + topic + "'.\n3. Implement changes incrementally and measure their impact.\n4. Iterate based on results and prioritize automation where possible.\n\n";
+            var resources = "Suggested resources:\n- Official documentation and starter guides specific to the topic.\n- Community tutorials, hands-on examples, and sample projects.\n- Tools and services to consider when scaling or deploying.\n\n";
+            var example = "Example checklist:\n- Quick audit of current setup\n- One prioritized improvement to apply\n- Run tests and monitor metrics\n- Deploy and observe\n\n";
+            var closing = "If you'd like a tailored walkthrough (code, commands, or checklists), refine your prompt or ask for more detail.";
+            return intro + summary + steps + resources + example + closing;
+        }
+
+        (function(){
+            var q = decodeURIComponent(getQueryParam('q') || '').trim();
+            var conv = document.getElementById('conversation');
+            if(!q){
+                conv.appendChild(createMsg('No prompt provided. Return the prompts page and select a prompt or submit your question.', 'ai'));
+                return;
+            }
+
+            // user message
+            var userMsg = createMsg(q, 'user');
+            conv.appendChild(userMsg);
+
+            setTimeout(function(){
+                var answerText = generateAnswer(q);
+                // Find where "Actionable steps:" starts
+                var stepsIdx = answerText.indexOf('Actionable steps:');
+                var beforeSteps = answerText.substring(0, stepsIdx);
+                var afterSteps = answerText.substring(stepsIdx);
+
+                // First part of answer
+                var aiMsg1 = createMsg(beforeSteps, 'ai');
+                aiMsg1.innerHTML = beforeSteps.replace(/\n/g, '<br>');
+                conv.appendChild(aiMsg1);
+
+                // Chat bubble
+                var bubble = document.createElement('div');
+                bubble.innerHTML = '<a href="nike_agent.html?q=' + encodeURIComponent(q) + '" class="chat-bubble">💬 I am the brand agent for Nike. Ask your question</a>';
+                conv.appendChild(bubble);
+
+                // Rest of answer
+                var aiMsg2 = createMsg(afterSteps, 'ai');
+                aiMsg2.innerHTML = afterSteps.replace(/\n/g, '<br>');
+                conv.appendChild(aiMsg2);
+
+                aiMsg2.scrollIntoView({behavior:'smooth'});
+            }, 700);
+        })();
+    </script>
+</body>
+</html>
