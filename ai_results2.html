@@ -85,8 +85,6 @@
                 conv.appendChild(createMsg('No prompt provided. Return to the prompts page and select a prompt or submit your question.', 'ai'));
                 return;
             }
-            // insert sponsored block first
-            conv.appendChild(createSponsoredBlock());
 
             // user message
             var userMsg = createMsg(q, 'user');
@@ -94,10 +92,25 @@
 
             setTimeout(function(){
                 var answerText = generateAnswer(q);
-                var aiMsg = createMsg(answerText, 'ai');
-                aiMsg.innerHTML = answerText.replace(/\n/g, '<br>');
-                conv.appendChild(aiMsg);
-                aiMsg.scrollIntoView({behavior:'smooth'});
+                // Split answer into summary and rest
+                var summaryEnd = answerText.indexOf('\n\n', answerText.indexOf('Summary:')) + 2;
+                var summarySec = answerText.substring(0, summaryEnd);
+                var restSec = answerText.substring(summaryEnd);
+
+                // Create messages
+                var aiMsg1 = createMsg(summarySec, 'ai');
+                aiMsg1.innerHTML = summarySec.replace(/\n/g, '<br>');
+                conv.appendChild(aiMsg1);
+
+                // Insert sponsored block
+                conv.appendChild(createSponsoredBlock());
+
+                // Append rest of answer
+                var aiMsg2 = createMsg(restSec, 'ai');
+                aiMsg2.innerHTML = restSec.replace(/\n/g, '<br>');
+                conv.appendChild(aiMsg2);
+
+                aiMsg2.scrollIntoView({behavior:'smooth'});
             }, 700);
         })();
     </script>
